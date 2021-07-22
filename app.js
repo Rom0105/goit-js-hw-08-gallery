@@ -91,6 +91,9 @@ ulListImages.insertAdjacentHTML("beforeend", cardImages);
 const modal = document.querySelector(".js-lightbox");
 ulListImages.addEventListener("click", imageContainerClick);
 const imageOpenModal = document.querySelector(".lightbox__image");
+const overlayRef = document.querySelector(".lightbox__overlay");
+
+let currentIndex;
 
 function imageContainerClick(event) {
   event.preventDefault();
@@ -110,6 +113,15 @@ function closeModalClick(event) {
 }
 
 window.addEventListener("keyup", closeModalClickEscape);
+
+overlayRef.addEventListener("click", onBackDropClick);
+
+function onBackDropClick(event) {
+  if (event.target !== overlayRef) {
+    return;
+  }
+  closeModalClick();
+}
 
 function closeModalClickEscape(event) {
   if (event.key !== "Escape") {
