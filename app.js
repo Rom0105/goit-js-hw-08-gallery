@@ -93,8 +93,6 @@ ulListImages.addEventListener("click", imageContainerClick);
 const imageOpenModal = document.querySelector(".lightbox__image");
 const overlayRef = document.querySelector(".lightbox__overlay");
 
-let currentIndex;
-
 function imageContainerClick(event) {
   event.preventDefault();
   if (!event.target.classList.contains("gallery__image")) {
