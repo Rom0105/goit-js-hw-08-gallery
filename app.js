@@ -66,6 +66,8 @@ const galleryItems = [
 
 const ulListImages = document.querySelector(".js-gallery");
 
+let activeIndex = null;
+
 function createImagesList(images) {
   return images
     .map(({ preview, original, description }) => {
@@ -91,7 +93,6 @@ ulListImages.insertAdjacentHTML("beforeend", cardImages);
 const modal = document.querySelector(".js-lightbox");
 ulListImages.addEventListener("click", imageContainerClick);
 const imageOpenModal = document.querySelector(".lightbox__image");
-const overlayRef = document.querySelector(".lightbox__overlay");
 
 function imageContainerClick(event) {
   event.preventDefault();
@@ -100,30 +101,47 @@ function imageContainerClick(event) {
   }
   modal.classList.add("is-open");
   imageOpenModal.src = event.target.dataset.source;
+  createImagesList(galleryItems).forEach((element, ind) => {
+    if (element.includes(event.target.src)) {
+      activeIndex = ind;
+    }
+  });
+  window.addEventListener("keydown", changeByArrows);
 }
 
-const closeModal = document.querySelector(".lightbox__button");
-closeModal.addEventListener("click", closeModalClick);
+modal.addEventListener("click", closeModalClick);
 
 function closeModalClick(event) {
-  modal.classList.remove("is-open");
+  if (event?.target.nodeName === "IMG") {
+    return;
+  }
   imageOpenModal.src = "";
+  modal.classList.remove("is-open");
+  window.addEventListener("keydown", changeByArrows);
 }
 
-window.addEventListener("keyup", closeModalClickEscape);
-
-overlayRef.addEventListener("click", onBackDropClick);
-
-function onBackDropClick(event) {
-  if (event.target !== overlayRef) {
-    return;
+function changeByArrows({ key }) {
+  switch (key) {
+    case galleryItems.length - 1 > activeIndex && "ArrowRight":
+      activeIndex += 1;
+      imageOpenModal.src = galleryItems[activeIndex].original;
+      break;
+    case activeIndex > 0 && "ArrowLeft":
+      activeIndex -= 1;
+      imageOpenModal.src = galleryItems[activeIndex].original;
+      break;
+    case activeIndex === galleryItems.length - 1 && "ArrowRight":
+      activeIndex = 0;
+      imageOpenModal.src = galleryItems[activeIndex].original;
+      break;
+    case activeIndex === 0 && "ArrowLeft":
+      activeIndex = galleryItems.length - 1;
+      imageOpenModal.src = galleryItems[activeIndex].original;
+      break;
+    case "Escape":
+      closeModalClick();
+      break;
+    default:
+      alert("что-то пошло не так");
   }
-  closeModalClick();
-}
-
-function closeModalClickEscape(event) {
-  if (event.key !== "Escape") {
-    return;
-  }
-  closeModalClick();
 }
