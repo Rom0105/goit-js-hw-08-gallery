@@ -112,36 +112,36 @@ function imageContainerClick(event) {
 modal.addEventListener("click", closeModalClick);
 
 function closeModalClick(event) {
-  if (event?.target.nodeName === "IMG") {
+  if (event.target.nodeName === "IMG") {
     return;
   }
   imageOpenModal.src = "";
   modal.classList.remove("is-open");
-  window.addEventListener("keydown", changeByArrows);
+  // window.addEventListener("keydown", changeByArrows);
 }
 
-function changeByArrows({ key }) {
-  switch (key) {
-    case galleryItems.length - 1 > activeIndex && "ArrowRight":
-      activeIndex += 1;
-      imageOpenModal.src = galleryItems[activeIndex].original;
-      break;
-    case activeIndex > 0 && "ArrowLeft":
-      activeIndex -= 1;
-      imageOpenModal.src = galleryItems[activeIndex].original;
-      break;
-    case activeIndex === galleryItems.length - 1 && "ArrowRight":
-      activeIndex = 0;
-      imageOpenModal.src = galleryItems[activeIndex].original;
-      break;
-    case activeIndex === 0 && "ArrowLeft":
-      activeIndex = galleryItems.length - 1;
-      imageOpenModal.src = galleryItems[activeIndex].original;
-      break;
-    case "Escape":
-      closeModalClick();
-      break;
-    default:
-      alert("что-то пошло не так");
-  }
-}
+// function changeByArrows({ key }) {
+//   switch (key) {
+//     case galleryItems.length - 1 > activeIndex && "ArrowRight":
+//       activeIndex += 1;
+//       imageOpenModal.src = galleryItems[activeIndex].original;
+//       break;
+//     case activeIndex > 0 && "ArrowLeft":
+//       activeIndex -= 1;
+//       imageOpenModal.src = galleryItems[activeIndex].original;
+//       break;
+//     case activeIndex === galleryItems.length - 1 && "ArrowRight":
+//       activeIndex = 0;
+//       imageOpenModal.src = galleryItems[activeIndex].original;
+//       break;
+//     case activeIndex === 0 && "ArrowLeft":
+//       activeIndex = galleryItems.length - 1;
+//       imageOpenModal.src = galleryItems[activeIndex].original;
+//       break;
+//     case "Escape":
+//       closeModalClick();
+//       break;
+//     default:
+//       alert("что-то пошло не так");
+//   }
+// }
